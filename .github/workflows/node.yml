@@ -3,9 +3,9 @@ name: NASA Project CI
 on:
   push:
     # 可以指定監控多個分支
-    branches: [ master ]
+    branches: [ main ]
   pull_request:
-    branches: [ master ]
+    branches: [ main ]
 # jobs 預設會同時進行，如果有相依性要額外設定 needs
 jobs: 
   build:
