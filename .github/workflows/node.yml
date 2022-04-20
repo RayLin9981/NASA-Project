@@ -11,14 +11,15 @@ jobs:
       # 在 test 就不會進入 watch mode
       CI: true
     strategy:
-    # martix 可以指定多個版本來測試，並且會同時進行
-      martix:
+    # matrix 可以指定多個版本來測試，並且會同時進行
+      matrix:
+      # 測試 14.x 與 16.x
         node-version: [14.x, 16.x]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       # name 也可以使用變數帶入
-      - name: Use Node.js version 16 ${{ matrix.node-version}}
+      - name: Use Node.js version 16 ${{ matrix.node-version }}
         uses: actions/setup-node@v2
         with:
         # 使用 {{}} 來指定上面的變數
