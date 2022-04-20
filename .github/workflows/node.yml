@@ -10,11 +10,15 @@ jobs:
       # 前端的框架會偵測 CI 這個變數
       # 在 test 就不會進入 watch mode
       CI: true
+      # nasa 為 DB name，actions 會幫忙建立 databases
+      MONGO_URL: mongodb://localhost/nasa
     strategy:
     # matrix 可以指定多個版本來測試，並且會同時進行
       matrix:
-      # 測試 14.x 與 16.x
+        # 測試 14.x 與 16.x
         node-version: [14.x, 16.x]
+        # 這樣就一共會執行 2x2 4個 job
+        mongodb-version: ['4.2','4.4']
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -24,6 +28,10 @@ jobs:
         with:
         # 使用 {{}} 來指定上面的變數
           node-version: ${{ matrix.node-version }}
+      - name: Use MongoDB actions
+        uses: supercharge/mongodb-github-action@1.7.0
+        with:
+          mongodb-version: ${{ matrix.mongodb-version }}
       - run: npm install
       - run: npm run build --prefix client
       - run: npm test
